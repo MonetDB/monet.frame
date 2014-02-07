@@ -1217,9 +1217,7 @@ Math.monet.frame <- function(x,digits=0,...) {
 #' @param _data a monet.frame object
 #' @param query an SQL query, using "_DATA_" as the placeholder for the
 #'     name of the table underlying the \code{_data}-object.
-#' @param keep_order should ORDER BY statements in the original query
-be kept? Will break if columns in the ORDER BY statement are not in
-the returned table
+#' @param keep_order should ORDER BY statements in the original query be kept? Will break if columns in the ORDER BY statement are not in the returned table
 #' @importFrom stringr str_extract_all
 transform.monet.frame <- function(`_data`, query, keep_order=TRUE, ...){
   nm <- paste(sample(letters, 15, rep=TRUE), collapse="")
