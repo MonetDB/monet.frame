@@ -63,3 +63,5 @@ S3method(rbind,monet.frame)
 S3method(merge,monet.frame)
 S3method(sort,monet.frame)
 
+S3method(transform,monet.frame)
+

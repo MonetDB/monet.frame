@@ -74,7 +74,7 @@
          \item \code{\link[base]{sort}} -- Sort a database column ascending or descending (only for single columns)
          \item \code{\link[base]{tabulate}} -- Counts the number of value occurences (only for single numerical columns)
          \item \code{\link[base]{range}} -- Gives range of values (only for single numerical columns)
-    
+        \item \code{\link[base]{transform}} -- Apply general SQL queries to a monet.frame object and return the result in a new monet.frame.)
        }
 }
 \seealso{

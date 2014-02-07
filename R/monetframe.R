@@ -1207,6 +1207,36 @@ Math.monet.frame <- function(x,digits=0,...) {
 	return(.col.func(x,.Generic))
 }
 
+
+#' Apply general SQL queries to a monet.frame object and return the
+#' result in a new monet.frame.
+#'
+#' @note Likely to break if  \code{attr(data, "query")} contains
+#'      LIMIT or OFFSET statements.
+#'
+#' @param _data a monet.frame object
+#' @param query an SQL query, using "_DATA_" as the placeholder for the
+#'     name of the table underlying the \code{_data}-object.
+#' @param keep_order should ORDER BY statements in the original query
+be kept? Will break if columns in the ORDER BY statement are not in
+the returned table
+#' @importFrom stringr str_extract_all
+transform.monet.frame <- function(`_data`, query, keep_order=TRUE, ...){
+  nm <- paste(sample(letters, 15, rep=TRUE), collapse="")
+  oldquery <- attr(`_data`, "query")
+  if(has_order <- grepl("(ORDER BY)", attr(`_data`, "query"))){
+    pattern <- "(ORDER
+    BY[[:space:]]+[[:alnum:]]+((,[[:space:]]*[[:alnum:]]+)*))"
+    pattern <- ignore.case(pattern)
+    orderby <- str_extract_all(oldquery, pattern)[[1]]
+    oldquery <- gsub(pattern, "", oldquery, ignore.case = TRUE)
+  }
+  query <- gsub("_DATA_", paste("(", oldquery, ") AS", nm), query)
+  if(has_order & keep_order) query <- paste(query, orderby)
+  monet.frame(attr(`_data`, "conn"), query)
+}
+
+
 # 'borrowed' from sqlsurvey, translates a subset() argument to sqlish
 
 sqlexpr<-function(expr,env=emptyenv()){
